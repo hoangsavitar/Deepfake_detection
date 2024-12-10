@@ -9,13 +9,13 @@ body {
 a {
   color: lightblue; /* Màu cho link, bạn có thể tùy chỉnh */
 }
-
+/* 
 button {
   background-color: grey;
   color: white;
   border: none;
   padding: 10px 15px;
-}
+} */
 
 input, textarea {
   background-color: black;
