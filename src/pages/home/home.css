@@ -11,3 +11,9 @@
     justify-content: center;
     display: flex;
 }
+.select {
+    padding: 20px;
+    justify-content: space-around;
+    display: flex;
+    align-items: center;
+}

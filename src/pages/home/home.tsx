@@ -1,9 +1,10 @@
-import { Button, Image, Modal } from "antd";
+import { Button, Image, Modal, Select } from "antd";
 import "./home.css";
 import { usePredict } from "../../app/loader"; // Hook của bạn để gọi API
 import { useState } from "react";
 
 const HomePage = () => {
+  const { Option } = Select;
   const [fileImage, setFileImage] = useState<File | null>(null);
   const {
     mutate: mutatePredict,
@@ -11,8 +12,7 @@ const HomePage = () => {
     isLoading: isLoadingPredict,
   } = usePredict();
   const [openModal, setOpenModal] = useState(false);
-  const defaultImage =
-    "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg";
+  const defaultImage = "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg";
   const [imagePath, setImagePath] = useState<string | undefined>(undefined);
   const handleImageUpload = (event: any) => {
     const file = event.target.files[0];
@@ -35,6 +35,11 @@ const HomePage = () => {
   const title = dataPredict?.prediction;
   const modalContent =
     title === 0 ? "Ảnh đã qua chỉnh sửa" : "Ảnh thật chưa qua chỉnh sửa";
+  const dataOptionsModelAi = [
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3" },
+  ];
   return (
     <div className="container">
       <div>
@@ -44,8 +49,16 @@ const HomePage = () => {
           src={imagePath ? imagePath : defaultImage}
         />
       </div>
-
       <div className="action">
+        <div className="select">
+          <Select placeholder="Chọn một model AI" style={{ width: 200 }}>
+            {dataOptionsModelAi.map((option) => (
+              <Option key={option.value} value={option.value}>
+                {option.label}
+              </Option>
+            ))}
+          </Select>
+        </div>
         <div className="upload">
           <input type="file" accept="image/*" onChange={handleImageUpload} />
         </div>
