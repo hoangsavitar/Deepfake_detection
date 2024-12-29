@@ -12,6 +12,45 @@ const ManageModel = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const dataModelMpdelAi = [
+    {
+      type: "naive",
+      data: [
+        { value: "meso4", label: "Meso4" },
+        { value: "medolncep", label: "Medolncep" },
+        { value: "cnnaug", label: "CNN-Aug" },
+      ],
+    },
+    {
+      type: "spatial",
+      data: [{ value: "xception", label: "Xception" }],
+    },
+    {
+      type: "frequency",
+      data: [
+        { value: "efficientB4", label: "EfficientB4" },
+        { value: "capsule", label: "Capsule" },
+        { value: "fwa", label: "FWA" },
+        { value: "facexray", label: "FaceXray" },
+        { value: "ffd", label: "FFD" },
+        { value: "core", label: "Core" },
+        { value: "recce", label: "Recce" },
+        { value: "ucf", label: "UCF" },
+        { value: "f3net", label: "F3Net" },
+        { value: "spsl", label: "SPSL" },
+        { value: "srm", label: "SRM" },
+      ],
+    },
+  ];
+  
+  // Chuyển đổi dữ liệu thành fakeData
+  const fakeData = dataModelMpdelAi.flatMap((item, index) =>
+    item.data.map((model, modelIndex) => ({
+      key: `${index}-${modelIndex}`,
+      type: item.type,
+      model: model.label, // Lấy label làm tên model
+    }))
+  );
   return (
     <>
       <Row style={{ padding: "20px" }}>
@@ -50,7 +89,7 @@ const ManageModel = () => {
                 gutter={[0, 40]}
                 style={{ padding: "20px" }}
               >
-                <ManageModelTable data />
+                <ManageModelTable data ={fakeData} />
               </Row>
             </Col>
           </Row>
