@@ -1,17 +1,24 @@
 import { useRoutes } from "react-router-dom";
-import DefaultLayout from "./pages/default-layout/default-layout";
 import HomePage from "./pages/home/home";
+import DefaultClient from "./pages/default-client/default-client";
+import { LoginPage } from "./pages/login/login";
+import ManageModel from "./pages/manage-model/manage-model";
 function App() {
   let element: any = useRoutes([
     {
       path: "/",
-      element: <DefaultLayout />,
+      element: <DefaultClient />,
       children: [
         {
           path: "/",
-          element: <HomePage />
-        }
-      ]
+          element: <HomePage />,
+        },
+        { path: "manage-model", element: <ManageModel /> },
+      ],
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
     },
   ]);
 
