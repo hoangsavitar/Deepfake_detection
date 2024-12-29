@@ -1,5 +1,5 @@
 import { Layout, Menu, Avatar, theme, Button, Row, Col, Popover } from "antd";
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -7,11 +7,11 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { MenuDashboard } from "../menu-dashboard/menu-dashoard";
-
+import "./default-client.css"
 const { Header, Sider, Content, Footer } = Layout;
 const DefaultClient = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const tokenLocal = localStorage.getItem("isLoginToken");
+  // const tokenLocal = localStorage.getItem("isLoginToken");
 
   const {
     token: { colorBgContainer },

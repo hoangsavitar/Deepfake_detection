@@ -14,7 +14,7 @@ export const LoginPage = () => {
 /*************  ✨ Codeium Command ⭐  *************/
 /******  4a87de41-7a41-4373-8cac-70a3b9d79f17  *******/
   const handleSubmit = (event: any) => {
-    // event.preventDefault();
+    event.preventDefault();
     // mutateLogin({
     //   username: user,
     //   password: password,

@@ -13,7 +13,10 @@ function App() {
           path: "/",
           element: <HomePage />,
         },
-        { path: "manage-model", element: <ManageModel /> },
+        {
+          path: "manage-model",
+          element: <ManageModel />,
+        },
       ],
     },
     {

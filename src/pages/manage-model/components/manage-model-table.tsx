@@ -1,5 +1,5 @@
 import { DeleteOutlined, HistoryOutlined } from "@ant-design/icons";
-import { Col, Pagination, Row, Spin } from "antd";
+import { Col, Pagination, Row } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 
 interface ListModelReport{
@@ -77,6 +77,8 @@ const ManageModelTable: React.FC<ListModelReport> = () => {
               </>
             );
             function handleDeteteSegment(data: any) {
+                console.log(data);
+                
             //   setIsCameraSelect(data);
             //   setIsModalDeleteCamera(true);
             }

@@ -13,7 +13,15 @@
 }
 .select {
     padding: 20px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+.upload {
+    padding: 20px;
     justify-content: space-around;
     display: flex;
     align-items: center;
+    margin-left: 20px;
 }
