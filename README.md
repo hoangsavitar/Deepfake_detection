@@ -27,7 +27,7 @@ npm run build
 npx serve -s dist
 ```
 
-5. **hehehehehjee**
+5. **Environment variables to configure the app at runtime**
 
 | Tên biến môi trường      | Giá trị               | Mô tả                               |
 | ------------------------ | --------------------- | ----------------------------------- |
