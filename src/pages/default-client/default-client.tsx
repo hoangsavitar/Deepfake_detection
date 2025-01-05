@@ -28,9 +28,7 @@ const DefaultClient = () => {
     localStorage.setItem("isLoginToken", "false");
     localStorage.removeItem("username");
     localStorage.removeItem("email");
-    localStorage.removeItem("phoneNumber");
-    localStorage.removeItem("full_name");
-    localStorage.removeItem("role_id");
+    localStorage.removeItem("token_type");
     window.location.href = "/login";
   };
 
@@ -128,7 +126,7 @@ const DefaultClient = () => {
                         icon={<UserOutlined />}
                         style={{ marginRight: 10 }}
                       />
-                      {/* {localStorage.getItem("email")} */}
+                      {localStorage.getItem("email")}
                     </div>
                   }
                 >
@@ -141,7 +139,7 @@ const DefaultClient = () => {
               </Col>
               <Col style={{ marginLeft: "10px" }}>
                 {" "}
-                {/* <h3>{localStorage.getItem("full_name")}</h3> */}
+                <h3>{localStorage.getItem("username")}</h3>
               </Col>
             </Row>
           </Header>

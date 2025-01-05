@@ -1,24 +1,23 @@
 import { useState } from "react";
 import "./login.css";
+import { useLoginPage } from "../../app/loader";
 // import loginBg from "./img/bgrDeepfake.jpg";
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-//   const { mutate: mutateLogin } = useLogin();
+  const { mutate: mutateLogin } = useLoginPage();
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
 
-/*************  ✨ Codeium Command ⭐  *************/
-/******  4a87de41-7a41-4373-8cac-70a3b9d79f17  *******/
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    // mutateLogin({
-    //   username: user,
-    //   password: password,
-    // });
+    mutateLogin({
+      username: user,
+      password: password,
+    });
   };
 
   return (
@@ -54,8 +53,8 @@ export const LoginPage = () => {
                 className="login__input"
                 id="login-pass"
                 placeholder=" "
-                value={password} // Liên kết state với input
-                onChange={(e) => setPassword(e.target.value)} // Cập nhật state khi nhập
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <label htmlFor="login-pass" className="login__label">
                 Password

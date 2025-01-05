@@ -60,3 +60,9 @@ export const updateModel = async (data: any) => {
   const result = await configAxios.put(url, data);
   return result.data;
 }
+
+export const loginPage = async (data: any) => {
+  const url = `/login`;
+  const result = await configAxios.post(url, data);
+  return result.data;
+}

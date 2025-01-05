@@ -4,6 +4,7 @@ import {
   deleteModel,
   getHistory,
   getModels,
+  loginPage,
   modelTypes,
   predict,
   predictImage,
@@ -11,12 +12,14 @@ import {
   updateModel,
 } from "./index.service";
 import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const CACHE_KEYS = {
   detection: "INFOR_DATA_DETECTION",
   predictions: "INFOR_DATA_PREDICTIONS",
   model: "INFOR_DATA_MODEL",
   modelType: "INFOR_DATA_MODEL_TYPE",
+  login: "INFOR_DATA_LOGIN",
 };
 
 export const usePredict = () => {
@@ -122,6 +125,33 @@ export const useUpdateModel = () => {
       },
       onError: () => {
         message.error("Cập nhật model thất bại!");
+      },
+    }
+  );
+};
+
+export const useLoginPage = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  return useMutation(
+    (data: any) => {
+      return loginPage(data);
+    },
+    {
+      onSuccess: (data) => {
+        if (data.access_token) {
+          localStorage.setItem("jwtToken", data.access_token);
+          localStorage.setItem("isLoginToken", "true");
+          localStorage.setItem("username", data.username);
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("token_type", data.token_type);
+        }
+        queryClient.invalidateQueries(CACHE_KEYS.login);
+        message.success("Đăng nhập thành công!");
+        navigate("/");
+      },
+      onError: () => {
+        message.error("Đăng nhập thất bại!");
       },
     }
   );
