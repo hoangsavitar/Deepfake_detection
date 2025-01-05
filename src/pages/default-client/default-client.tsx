@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { MenuDashboard } from "../menu-dashboard/menu-dashoard";
-import "./default-client.css"
+import "./default-client.css";
 const { Header, Sider, Content, Footer } = Layout;
 const DefaultClient = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -41,7 +41,15 @@ const DefaultClient = () => {
           trigger={null}
           collapsible
           collapsed={collapsed}
-          style={{ height: "100vh" }}
+          style={{
+            position: "fixed", // Cố định vị trí của Sider
+            top: 0,            // Đặt Sider ở vị trí trên cùng
+            left: 0,           // Đặt Sider ở cạnh trái
+            width: 250,        // Đặt chiều rộng của Sider (có thể tùy chỉnh)
+            height: "100vh",    // Chiều cao bằng chiều cao của màn hình
+            overflow: "hidden", // Không hiển thị thanh cuộn trong Sider
+            zIndex: 100,       // Đảm bảo Sider ở trên các phần tử khác
+          }}
         >
           <div
             style={{
@@ -138,7 +146,7 @@ const DefaultClient = () => {
             </Row>
           </Header>
 
-          <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+          <Content style={{ marginLeft: "220px", marginTop: "20px", marginRight: "20px", overflow: "initial" }}>
             <Outlet />
           </Content>
           <Footer style={{ textAlign: "center" }}>

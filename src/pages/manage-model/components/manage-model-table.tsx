@@ -4,14 +4,18 @@ import { ColumnsType } from "antd/es/table";
 
 interface ReportModelHistory {
   key: React.Key;
-  type: string;
+  model_type: string;
   model: string;
 }
 interface ListModelReport {
   data: ReportModelHistory[];
+  setIdModel: any;
+  setIsModalAlertOpen: any;
+  setIsModalOpenEdit: any;
+  form: any;
 }
 
-const ManageModelTable: React.FC<ListModelReport> = ({ data }) => {
+const ManageModelTable: React.FC<ListModelReport> = ({ data, setIdModel, setIsModalAlertOpen, setIsModalOpenEdit, form }) => {
   const columModel: ColumnsType<ReportModelHistory> = [
     {
       title: "STT",
@@ -23,7 +27,7 @@ const ManageModelTable: React.FC<ListModelReport> = ({ data }) => {
     {
       title: "Model type",
       align: "center",
-      dataIndex: "type",
+      dataIndex: "model_type",
     },
     {
       title: "Model",
@@ -36,7 +40,7 @@ const ManageModelTable: React.FC<ListModelReport> = ({ data }) => {
       render: (_, data: any) => {
         return (
           <>
-            <EditOutlined className="history-button" />
+            <EditOutlined className="history-button" onClick={()=> handleEditModel(data)}/>
             <DeleteOutlined
               className="delete-button"
               onClick={() => handleDeleteSegment(data)}
@@ -44,7 +48,13 @@ const ManageModelTable: React.FC<ListModelReport> = ({ data }) => {
           </>
         );
         function handleDeleteSegment(data: any) {
-          console.log("Delete", data);
+          setIdModel(data.id);
+          setIsModalAlertOpen(true);
+        }
+        function handleEditModel(data: any) {
+          setIdModel(data.id);
+          setIsModalOpenEdit(true);
+          form.setFieldsValue({ model_type: data.model_type, model: data.model, id: data.id });
         }
       },
     },

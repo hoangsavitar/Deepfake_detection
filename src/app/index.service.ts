@@ -1,4 +1,4 @@
-import { configAxios } from "../config/config-https";
+import { configAxios, configAxios2 } from "../config/config-https";
 
 export const predict = async (data: FormData) => {
   const url = `/predict`;
@@ -9,3 +9,54 @@ export const predict = async (data: FormData) => {
   });
   return result.data;
 };
+
+export const getHistory = async () => {
+  const url = `/predictions`;
+  const result = await configAxios.get(url);
+  return result.data;
+};
+
+export const getModels = async (data: any) => {
+  const url = `/models?model_type=${data?.model_type}`;
+  const result = await configAxios.get(url);
+  return result.data;
+};
+export const modelTypes = async () => {
+  const url = `/model-types`;
+  const result = await configAxios.get(url);
+  return result.data;
+};
+
+export const predictImage = async (data: FormData) => {
+  const url = `/predictnew`;
+  const result = await configAxios2.post(url, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return result.data;
+};
+
+export const savePrediction = async (data: any) => {
+  const url = `/save_prediction`;
+  const result = await configAxios.post(url, data);
+  return result.data;
+};
+
+export const addModel = async (data: any) => {
+  const url = `/models`;
+  const result = await configAxios.post(url, data);
+  return result.data;
+};
+
+export const deleteModel = async (data: any) => {
+  const url = `/models/${data}`;
+  const result = await configAxios.delete(url);
+  return result.data;
+};
+
+export const updateModel = async (data: any) => {
+  const url = `/models`;
+  const result = await configAxios.put(url, data);
+  return result.data;
+}

@@ -1,1 +1,2 @@
 export const BASE_URL_BACKEND = import.meta.env.VITE_BASE_URL_BACKEND
+export const BASE_URL_BACKEND_DEEPFAKE = import.meta.env.VITE_BASE_URL_BACKEND_DEEPFAKE
