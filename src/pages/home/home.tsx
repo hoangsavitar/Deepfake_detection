@@ -4,6 +4,7 @@ import {
   useGetHistory,
   useGetModels,
   useGetModelType,
+  usePredict,
   usePredictImage,
   useSavePrediction,
 } from "../../app/loader";
@@ -20,18 +21,36 @@ const HomePage = () => {
     data: dataPredict,
     isLoading: isLoadingPredict,
   } = usePredictImage();
+  const {
+    mutate: mutatePredictold,
+    data: dataPredictold,
+    isLoading: isLoadingPredictold,
+  } = usePredict();
   const { mutate: mutateSavePrediction } = useSavePrediction();
   useEffect(() => {
-    if (dataPredict) {
-      const predictionData = {
-        image_url: dataPredict.image_url,
-        prediction: dataPredict.prediction,
-        model_name: dataPredict.model_name,
-        timestamp: new Date().toISOString(),
-      };
-      mutateSavePrediction([predictionData]);
+    if (dataPredict || dataPredictold) {
+      let predictionData = null;
+      if (selectedModel === "Autoencoder" && dataPredictold) {
+        predictionData = {
+          image_url: dataPredictold.image_url,
+          prediction: dataPredictold.prediction,
+          model_name: dataPredictold.model_name,
+          timestamp: new Date().toISOString(),
+        };
+      }
+      else if (dataPredict) {
+        predictionData = {
+          image_url: dataPredict.image_url,
+          prediction: dataPredict.prediction,
+          model_name: dataPredict.model_name,
+          timestamp: new Date().toISOString(),
+        };
+      }
+      if (predictionData) {
+        mutateSavePrediction([predictionData]);
+      }
     }
-  }, [dataPredict, mutateSavePrediction]);
+  }, [dataPredict, dataPredictold, mutateSavePrediction, selectedModel]);
   const { data: dataModelTypes } = useGetModelType();
   const { data: dataModelModelAi } = useGetModels({ model_type: typeModel });
   const [openModal, setOpenModal] = useState(false);
@@ -51,13 +70,18 @@ const HomePage = () => {
     if (fileImage) {
       const formData = new FormData();
       formData.append("file", fileImage);
-      formData.append("model_name", selectedModel as string);
-      mutatePredict(formData);
+      if (selectedModel !== "Autoencoder") {
+        formData.append("model_name", selectedModel as string);
+        mutatePredict(formData);
+      } else {
+        mutatePredictold(formData);
+      }
       setOpenModal(true);
     } else {
       console.error("No file uploaded");
     }
   };
+  
   const handleChangeTypeModel = (value: string) => {
     setTypeModel(value);
   };
@@ -65,14 +89,23 @@ const HomePage = () => {
     setSelectedModel(value);
   };
 
-  const imagePathResponse = dataPredict?.image_url;
-  const title =
-    dataPredict?.prediction !== undefined
-      ? dataPredict?.prediction === 0
-        ? "Ảnh đã qua chỉnh sửa"
-        : "Ảnh thật chưa qua chỉnh sửa"
-      : "Lỗi model";
+  const imagePathResponse = dataPredict?.image_url || dataPredictold?.image_url;
 
+  const title = (() => {
+    if (dataPredict) {
+      return dataPredict?.prediction === 0
+        ? "Ảnh đã qua chỉnh sửa"
+        : "Ảnh thật chưa qua chỉnh sửa";
+    }
+
+    if (dataPredictold) {
+      return dataPredictold?.prediction === 0
+        ? "Ảnh đã qua chỉnh sửa"
+        : "Ảnh thật chưa qua chỉnh sửa";
+    }
+    return "Lỗi model";
+  })();
+  
   const modalContent = title;
   return (
     <div className="container">
@@ -139,7 +172,7 @@ const HomePage = () => {
         title="Deepfake Detection Result"
         open={openModal}
         onOk={() => setOpenModal(false)}
-        loading={isLoadingPredict}
+        loading={isLoadingPredict || isLoadingPredictold}
         cancelButtonProps={{ style: { display: "none" } }}
         onCancel={() => setOpenModal(false)}
       >
